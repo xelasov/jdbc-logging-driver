@@ -12,6 +12,7 @@ public class LoggingCallableStatement extends LoggingPreparedStatement implement
 
   private static final String outPrefix = "<";
   private static final String outSuffix = ">";
+  
   private final CallableStatement cStmt;
 
   public LoggingCallableStatement(final LoggingConnection conn, final CallableStatement cStmt, final String sql) {

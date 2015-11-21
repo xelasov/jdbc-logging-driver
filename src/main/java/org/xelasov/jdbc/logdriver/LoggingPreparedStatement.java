@@ -25,7 +25,7 @@ public class LoggingPreparedStatement extends LoggingStatement implements Prepar
   public LoggingPreparedStatement(final LoggingConnection conn, final PreparedStatement pStmt, final String sql) {
     super(conn, pStmt);
     this.pStmt = pStmt;
-    this.params = new ArrayList<Pair<String, String>>(20);
+    this.params = new ArrayList<>(20);
     this.sql = sql;
   }
 
@@ -60,7 +60,7 @@ public class LoggingPreparedStatement extends LoggingStatement implements Prepar
   }
 
   protected void setParam(String name, String value) {
-    params.add(new Pair<String, String>(name, value));
+    params.add(new Pair<>(name, value));
   }
 
   @Override
@@ -81,12 +81,9 @@ public class LoggingPreparedStatement extends LoggingStatement implements Prepar
       final boolean rv = pStmt.execute();
       log(sql, params, conn, timer);
       return rv;
-    } catch (final SQLException e) {
+    } catch (final SQLException | RuntimeException e) {
       log(sql, params, conn, timer, e);
       throw e;
-    } catch (final RuntimeException re) {
-      log(sql, params, conn, timer, re);
-      throw re;
     }
   }
 
@@ -97,12 +94,9 @@ public class LoggingPreparedStatement extends LoggingStatement implements Prepar
       final ResultSet rv = pStmt.executeQuery();
       log(sql, params, conn, timer);
       return rv;
-    } catch (final SQLException e) {
+    } catch (final SQLException | RuntimeException e) {
       log(sql, params, conn, timer, e);
       throw e;
-    } catch (final RuntimeException re) {
-      log(sql, params, conn, timer, re);
-      throw re;
     }
   }
 
@@ -113,12 +107,9 @@ public class LoggingPreparedStatement extends LoggingStatement implements Prepar
       final int rv = pStmt.executeUpdate();
       log(sql, params, conn, timer);
       return rv;
-    } catch (final SQLException e) {
+    } catch (final SQLException | RuntimeException e) {
       log(sql, params, conn, timer, e);
       throw e;
-    } catch (final RuntimeException re) {
-      log(sql, params, conn, timer, re);
-      throw re;
     }
   }
 
