@@ -6,20 +6,20 @@ import java.util.HashMap;
 
 public class SqlUtil {
 
-    private static final HashMap<Integer, String> sqlTypes = new HashMap<Integer, String>();
+  private static final HashMap<Integer, String> sqlTypes = new HashMap<Integer, String>();
 
-    static {
-        for (final Field f : Types.class.getDeclaredFields()) {
-            try {
-                sqlTypes.put(f.getInt(null), f.getName());
-            } catch (final IllegalArgumentException e) {
-            } catch (final IllegalAccessException e) {
-            }
-        }
+  static {
+    for (final Field f : Types.class.getDeclaredFields()) {
+      try {
+        sqlTypes.put(f.getInt(null), f.getName());
+      } catch (final IllegalArgumentException e) {
+      } catch (final IllegalAccessException e) {
+      }
     }
+  }
 
-    public static String getSqlTypeName(int sqlType) {
-        return sqlTypes.get(sqlType);
-    }
+  public static String getSqlTypeName(int sqlType) {
+    return sqlTypes.get(sqlType);
+  }
 
 }
