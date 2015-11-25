@@ -10,9 +10,6 @@ import java.util.Map;
 
 public class LoggingCallableStatement extends LoggingPreparedStatement implements CallableStatement {
 
-  private static final String outPrefix = "<";
-  private static final String outSuffix = ">";
-  
   private final CallableStatement cStmt;
 
   public LoggingCallableStatement(final LoggingConnection conn, final CallableStatement cStmt, final String sql) {
@@ -348,307 +345,307 @@ public class LoggingCallableStatement extends LoggingPreparedStatement implement
 
   @Override
   public void registerOutParameter(final int parameterIndex, final int sqlType) throws SQLException {
-    setParam(String.valueOf(parameterIndex), outPrefix + SqlUtil.getSqlTypeName(sqlType) + outSuffix);
+    setParam(Parameter.makeOutParam(parameterIndex, sqlType));
     cStmt.registerOutParameter(parameterIndex, sqlType);
   }
 
   @Override
   public void registerOutParameter(final int parameterIndex, final int sqlType, final int scale) throws SQLException {
-    setParam(String.valueOf(parameterIndex), outPrefix + SqlUtil.getSqlTypeName(sqlType) + outSuffix);
+    setParam(Parameter.makeOutParam(parameterIndex, sqlType));
     cStmt.registerOutParameter(parameterIndex, sqlType, scale);
   }
 
   @Override
   public void registerOutParameter(final int parameterIndex, final int sqlType, final String typeName) throws SQLException {
-    setParam(String.valueOf(parameterIndex), outPrefix + SqlUtil.getSqlTypeName(sqlType) + outSuffix);
+    setParam(Parameter.makeOutParam(parameterIndex, sqlType));
     cStmt.registerOutParameter(parameterIndex, sqlType, typeName);
   }
 
   @Override
   public void registerOutParameter(final String parameterName, final int sqlType) throws SQLException {
-    setParam(parameterName, outPrefix + SqlUtil.getSqlTypeName(sqlType) + outSuffix);
+    setParam(Parameter.makeOutParam(parameterName, sqlType));
     cStmt.registerOutParameter(parameterName, sqlType);
   }
 
   @Override
   public void registerOutParameter(final String parameterName, final int sqlType, final int scale) throws SQLException {
-    setParam(parameterName, outPrefix + SqlUtil.getSqlTypeName(sqlType) + outSuffix);
+    setParam(Parameter.makeOutParam(parameterName, sqlType));
     cStmt.registerOutParameter(parameterName, sqlType, scale);
   }
 
   @Override
   public void registerOutParameter(final String parameterName, final int sqlType, final String typeName) throws SQLException {
-    setParam(parameterName, outPrefix + SqlUtil.getSqlTypeName(sqlType) + outSuffix);
+    setParam(Parameter.makeOutParam(parameterName, sqlType));
     cStmt.registerOutParameter(parameterName, sqlType, typeName);
   }
 
   @Override
   public void setAsciiStream(final String parameterName, final InputStream x) throws SQLException {
-    setParam(parameterName, InputStream.class);
+    setParam(Parameter.makeInParam(parameterName, InputStream.class, x));
     cStmt.setAsciiStream(parameterName, x);
   }
 
   @Override
   public void setAsciiStream(final String parameterName, final InputStream x, final int length) throws SQLException {
-    setParam(parameterName, InputStream.class);
+    setParam(Parameter.makeInParam(parameterName, InputStream.class, x));
     cStmt.setAsciiStream(parameterName, x, length);
   }
 
   @Override
   public void setAsciiStream(final String parameterName, final InputStream x, final long length) throws SQLException {
-    setParam(parameterName, InputStream.class);
+    setParam(Parameter.makeInParam(parameterName, InputStream.class, x));
     cStmt.setAsciiStream(parameterName, x, length);
   }
 
   @Override
   public void setBigDecimal(final String parameterName, final BigDecimal x) throws SQLException {
-    setParam(parameterName, BigDecimal.class);
+    setParam(Parameter.makeInParam(parameterName, BigDecimal.class, x));
     cStmt.setBigDecimal(parameterName, x);
   }
 
   @Override
   public void setBinaryStream(final String parameterName, final InputStream x) throws SQLException {
-    setParam(parameterName, InputStream.class);
+    setParam(Parameter.makeInParam(parameterName, InputStream.class, x));
     cStmt.setBinaryStream(parameterName, x);
   }
 
   @Override
   public void setBinaryStream(final String parameterName, final InputStream x, final int length) throws SQLException {
-    setParam(parameterName, InputStream.class);
+    setParam(Parameter.makeInParam(parameterName, InputStream.class, x));
     cStmt.setBinaryStream(parameterName, x, length);
   }
 
   @Override
   public void setBinaryStream(final String parameterName, final InputStream x, final long length) throws SQLException {
-    setParam(parameterName, InputStream.class);
+    setParam(Parameter.makeInParam(parameterName, InputStream.class, x));
     cStmt.setBinaryStream(parameterName, x, length);
   }
 
   @Override
   public void setBlob(final String parameterName, final Blob x) throws SQLException {
-    setParam(parameterName, Blob.class);
+    setParam(Parameter.makeInParam(parameterName, Blob.class, x));
     cStmt.setBlob(parameterName, x);
   }
 
   @Override
   public void setBlob(final String parameterName, final InputStream inputStream) throws SQLException {
-    setParam(parameterName, InputStream.class);
+    setParam(Parameter.makeInParam(parameterName, InputStream.class, inputStream));
     cStmt.setBlob(parameterName, inputStream);
   }
 
   @Override
   public void setBlob(final String parameterName, final InputStream inputStream, final long length) throws SQLException {
-    setParam(parameterName, InputStream.class);
+    setParam(Parameter.makeInParam(parameterName, InputStream.class, inputStream));
     cStmt.setBlob(parameterName, inputStream, length);
   }
 
   @Override
   public void setBoolean(final String parameterName, final boolean x) throws SQLException {
-    setParam(parameterName, Boolean.class);
+    setParam(Parameter.makeInParam(parameterName, Boolean.class, x));
     cStmt.setBoolean(parameterName, x);
   }
 
   @Override
   public void setByte(final String parameterName, final byte x) throws SQLException {
-    setParam(parameterName, Byte.class);
+    setParam(Parameter.makeInParam(parameterName, Byte.class, x));
     cStmt.setByte(parameterName, x);
   }
 
   @Override
   public void setBytes(final String parameterName, final byte[] x) throws SQLException {
-    setParam(parameterName, byte[].class);
+    setParam(Parameter.makeInParam(parameterName, Byte[].class, x));
     cStmt.setBytes(parameterName, x);
   }
 
   @Override
   public void setCharacterStream(final String parameterName, final Reader reader) throws SQLException {
-    setParam(parameterName, Reader.class);
+    setParam(Parameter.makeInParam(parameterName, Reader.class, reader));
     cStmt.setCharacterStream(parameterName, reader);
   }
 
   @Override
   public void setCharacterStream(final String parameterName, final Reader reader, final int length) throws SQLException {
-    setParam(parameterName, Reader.class);
+    setParam(Parameter.makeInParam(parameterName, Reader.class, reader));
     cStmt.setCharacterStream(parameterName, reader, length);
   }
 
   @Override
   public void setCharacterStream(final String parameterName, final Reader reader, final long length) throws SQLException {
-    setParam(parameterName, Reader.class);
+    setParam(Parameter.makeInParam(parameterName, Reader.class, reader));
     cStmt.setCharacterStream(parameterName, reader, length);
   }
 
   @Override
   public void setClob(final String parameterName, final Clob x) throws SQLException {
-    setParam(parameterName, Clob.class);
+    setParam(Parameter.makeInParam(parameterName, Clob.class, x));
     cStmt.setClob(parameterName, x);
   }
 
   @Override
   public void setClob(final String parameterName, final Reader reader) throws SQLException {
-    setParam(parameterName, Reader.class);
+    setParam(Parameter.makeInParam(parameterName, Reader.class, reader));
     cStmt.setClob(parameterName, reader);
   }
 
   @Override
   public void setClob(final String parameterName, final Reader reader, final long length) throws SQLException {
-    setParam(parameterName, Reader.class);
+    setParam(Parameter.makeInParam(parameterName, Reader.class, reader));
     cStmt.setClob(parameterName, reader, length);
   }
 
   @Override
   public void setDate(final String parameterName, final Date x) throws SQLException {
-    setParam(parameterName, Date.class, x);
+    setParam(Parameter.makeInParam(parameterName, Date.class, x));
     cStmt.setDate(parameterName, x);
   }
 
   @Override
   public void setDate(final String parameterName, final Date x, final Calendar cal) throws SQLException {
-    setParam(parameterName, Date.class, x);
+    setParam(Parameter.makeInParam(parameterName, Date.class, x));
     cStmt.setDate(parameterName, x, cal);
   }
 
   @Override
   public void setDouble(final String parameterName, final double x) throws SQLException {
-    setParam(parameterName, Double.class, x);
+    setParam(Parameter.makeInParam(parameterName, Double.class, x));
     cStmt.setDouble(parameterName, x);
   }
 
   @Override
   public void setFloat(final String parameterName, final float x) throws SQLException {
-    setParam(parameterName, Float.class, x);
+    setParam(Parameter.makeInParam(parameterName, Float.class, x));
     cStmt.setFloat(parameterName, x);
   }
 
   @Override
   public void setInt(final String parameterName, final int x) throws SQLException {
-    setParam(parameterName, Integer.class, x);
+    setParam(Parameter.makeInParam(parameterName, Integer.class, x));
     cStmt.setInt(parameterName, x);
   }
 
   @Override
   public void setLong(final String parameterName, final long x) throws SQLException {
-    setParam(parameterName, Long.class, x);
+    setParam(Parameter.makeInParam(parameterName, Long.class, x));
     cStmt.setLong(parameterName, x);
   }
 
   @Override
   public void setNCharacterStream(final String parameterName, final Reader value) throws SQLException {
-    setParam(parameterName, Reader.class);
+    setParam(Parameter.makeInParam(parameterName, Reader.class, value));
     cStmt.setNCharacterStream(parameterName, value);
   }
 
   @Override
   public void setNCharacterStream(final String parameterName, final Reader value, final long length) throws SQLException {
-    setParam(parameterName, Reader.class);
+    setParam(Parameter.makeInParam(parameterName, Reader.class, value));
     cStmt.setNCharacterStream(parameterName, value, length);
   }
 
   @Override
   public void setNClob(final String parameterName, final NClob value) throws SQLException {
-    setParam(parameterName, NClob.class);
+    setParam(Parameter.makeInParam(parameterName, NClob.class, value));
     cStmt.setNClob(parameterName, value);
   }
 
   @Override
   public void setNClob(final String parameterName, final Reader reader) throws SQLException {
-    setParam(parameterName, Reader.class);
+    setParam(Parameter.makeInParam(parameterName, Reader.class, reader));
     cStmt.setNClob(parameterName, reader);
   }
 
   @Override
   public void setNClob(final String parameterName, final Reader reader, final long length) throws SQLException {
-    setParam(parameterName, Reader.class);
+    setParam(Parameter.makeInParam(parameterName, Reader.class, reader));
     cStmt.setNClob(parameterName, reader, length);
   }
 
   @Override
   public void setNString(final String parameterName, final String value) throws SQLException {
-    setParam(parameterName, String.class, value);
+    setParam(Parameter.makeInParam(parameterName, String.class, value));
     cStmt.setNString(parameterName, value);
   }
 
   @Override
   public void setNull(final String parameterName, final int sqlType, final String typeName) throws SQLException {
-    setParam(parameterName, Void.class, null);
+    setParam(Parameter.makeInParam(parameterName, sqlType, null));
     cStmt.setNull(parameterName, sqlType, typeName);
   }
 
   @Override
   public void setNull(String parameterName, int sqlType) throws SQLException {
-    setParam(parameterName, Void.class, null);
+    setParam(Parameter.makeInParam(parameterName, sqlType, null));
     cStmt.setNull(parameterName, sqlType);
   }
 
   @Override
   public void setObject(final String parameterName, final Object x) throws SQLException {
-    setParam(parameterName, Object.class, x);
+    setParam(Parameter.makeInParam(parameterName, x));
     cStmt.setObject(parameterName, x);
   }
 
   @Override
   public void setObject(final String parameterName, final Object x, final int targetSqlType) throws SQLException {
-    setParam(parameterName, Object.class, x);
+    setParam(Parameter.makeInParam(parameterName, targetSqlType, x));
     cStmt.setObject(parameterName, x, targetSqlType);
   }
 
   @Override
   public void setObject(final String parameterName, final Object x, final int targetSqlType, final int scale) throws SQLException {
-    setParam(parameterName, Object.class, x);
+    setParam(Parameter.makeInParam(parameterName, targetSqlType, x));
     cStmt.setObject(parameterName, x, targetSqlType, scale);
   }
 
   @Override
   public void setRowId(final String parameterName, final RowId x) throws SQLException {
-    setParam(parameterName, RowId.class, x);
+    setParam(Parameter.makeInParam(parameterName, RowId.class, x));
     cStmt.setRowId(parameterName, x);
   }
 
   @Override
   public void setShort(final String parameterName, final short x) throws SQLException {
-    setParam(parameterName, Short.class, x);
+    setParam(Parameter.makeInParam(parameterName, Short.class, x));
     cStmt.setShort(parameterName, x);
   }
 
   @Override
   public void setSQLXML(final String parameterName, final SQLXML xmlObject) throws SQLException {
-    setParam(parameterName, SQLXML.class, xmlObject);
+    setParam(Parameter.makeInParam(parameterName, SQLXML.class, xmlObject));
     cStmt.setSQLXML(parameterName, xmlObject);
   }
 
   @Override
   public void setString(final String parameterName, final String x) throws SQLException {
-    setParam(parameterName, String.class, x);
+    setParam(Parameter.makeInParam(parameterName, String.class, x));
     cStmt.setString(parameterName, x);
   }
 
   @Override
   public void setTime(final String parameterName, final Time x) throws SQLException {
-    setParam(parameterName, Time.class, x);
+    setParam(Parameter.makeInParam(parameterName, Time.class, x));
     cStmt.setTime(parameterName, x);
   }
 
   @Override
   public void setTime(final String parameterName, final Time x, final Calendar cal) throws SQLException {
-    setParam(parameterName, Time.class, x);
+    setParam(Parameter.makeInParam(parameterName, Time.class, x));
     cStmt.setTime(parameterName, x, cal);
   }
 
   @Override
   public void setTimestamp(final String parameterName, final Timestamp x) throws SQLException {
-    setParam(parameterName, Timestamp.class, x);
+    setParam(Parameter.makeInParam(parameterName, Timestamp.class, x));
     cStmt.setTimestamp(parameterName, x);
   }
 
   @Override
   public void setTimestamp(final String parameterName, final Timestamp x, final Calendar cal) throws SQLException {
-    setParam(parameterName, Timestamp.class, x);
+    setParam(Parameter.makeInParam(parameterName, Timestamp.class, x));
     cStmt.setTimestamp(parameterName, x, cal);
   }
 
   @Override
   public void setURL(final String parameterName, final URL val) throws SQLException {
-    setParam(parameterName, URL.class, val);
+    setParam(Parameter.makeInParam(parameterName, URL.class, val));
     cStmt.setURL(parameterName, val);
   }
 
@@ -659,8 +656,7 @@ public class LoggingCallableStatement extends LoggingPreparedStatement implement
 
   @Override
   public void closeOnCompletion() throws SQLException {
-    // TODO Auto-generated method stub
-
+    this.cStmt.closeOnCompletion();
   }
 
   @Override

@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 
 public class LoggingStatement implements Statement {
 
-  protected static final Logger log = LoggerFactory.getLogger("DB.LOG");
+  protected static final Logger log = LoggerFactory.getLogger("SQL.LOG");
 
   protected final LoggingConnection conn;
   private final   Statement         stmt;
@@ -19,15 +19,16 @@ public class LoggingStatement implements Statement {
     this.conn = conn;
   }
 
-  private void log(String sql, LoggingConnection connection, Stopwatch timer, Throwable e) {
+  protected void log(String sql, LoggingConnection connection, Stopwatch timer, Throwable e) {
     timer.stop();
     log.error("millis=" + timer.elapsed(TimeUnit.MILLISECONDS) + " q={" + sql + "}", e);
   }
 
-  private void log(String sql, LoggingConnection connection, Stopwatch timer) {
+  protected void log(String sql, LoggingConnection connection, Stopwatch timer) {
     timer.stop();
     log.info("millis=" + timer.elapsed(TimeUnit.MILLISECONDS) + " q={" + sql + "}");
   }
+
 
   @Override
   public void addBatch(final String sql) throws SQLException {
