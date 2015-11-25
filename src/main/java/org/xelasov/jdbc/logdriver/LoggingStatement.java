@@ -23,14 +23,16 @@ public class LoggingStatement implements Statement {
     this.conn = conn;
   }
 
-  protected void log(String sql, LoggingConnection connection, Stopwatch timer, Throwable e) {
-    timer.stop();
-    log.error("millis=" + timer.elapsed(TimeUnit.MILLISECONDS) + " q={" + sql + "}", e);
+  protected void log(String sql, LoggingConnection conn, Stopwatch timer, Throwable e) {
+    log.info(buildLogString(sql, conn, timer.stop().elapsed(TimeUnit.MILLISECONDS)), e);
   }
 
-  protected void log(String sql, LoggingConnection connection, Stopwatch timer) {
-    timer.stop();
-    log.info("millis=" + timer.elapsed(TimeUnit.MILLISECONDS) + " q={" + sql + "}");
+  protected void log(String sql, LoggingConnection conn, Stopwatch timer) {
+    log.info(buildLogString(sql, conn, timer.stop().elapsed(TimeUnit.MILLISECONDS)));
+  }
+
+  protected static String buildLogString(final String sql, final LoggingConnection conn, final long millis) {
+    return "millis=" + millis + " db=[" + conn.getDbId() + "] q=[" + sql + "]";
   }
 
 

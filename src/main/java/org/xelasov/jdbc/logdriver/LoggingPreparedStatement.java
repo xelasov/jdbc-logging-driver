@@ -40,20 +40,20 @@ public class LoggingPreparedStatement extends LoggingStatement implements Prepar
   }
 
   protected void log(final String sql, final List<Parameter> params, final LoggingConnection conn, final Stopwatch timer) {
-    log(buildSqlStr(sql, params), conn, timer);
+    log(buildSqlString(sql, params), conn, timer);
   }
 
   protected void log(final String sql, final List<Parameter> params, final LoggingConnection conn, final Stopwatch timer, final Throwable e) {
-    log(buildSqlStr(sql, params), conn, timer, e);
+    log(buildSqlString(sql, params), conn, timer, e);
   }
 
   protected void setParam(Parameter p) {
-    this.params.add(p);
+    params.add(p);
   }
 
-  protected static String buildSqlStr(String sql, List<Parameter> params) {
-    final Joiner joiner = Joiner.on(", ").skipNulls();
-    final StringBuilder sb = new StringBuilder();
+  protected static String buildSqlString(String sql, List<Parameter> params) {
+    final Joiner        joiner = Joiner.on(", ").skipNulls();
+    final StringBuilder sb     = new StringBuilder();
     sb.append("[sql=" + sql);
     sb.append("; params=[");
     sb.append(joiner.join(params));
