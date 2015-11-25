@@ -1,6 +1,10 @@
 package org.xelasov.jdbc.logdriver;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.SQLWarning;
+import java.sql.Statement;
 import java.util.concurrent.TimeUnit;
 
 import com.google.common.base.Stopwatch;
