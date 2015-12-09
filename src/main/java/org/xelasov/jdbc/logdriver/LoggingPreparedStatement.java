@@ -23,7 +23,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import com.google.common.base.Joiner;
 import com.google.common.base.Stopwatch;
 
 public class LoggingPreparedStatement extends LoggingStatement implements PreparedStatement {
@@ -52,12 +51,9 @@ public class LoggingPreparedStatement extends LoggingStatement implements Prepar
   }
 
   protected static String buildSqlString(String sql, List<Parameter> params) {
-    final Joiner        joiner = Joiner.on(", ").skipNulls();
-    final StringBuilder sb     = new StringBuilder();
+    final StringBuilder sb = new StringBuilder();
     sb.append("[sql=" + sql);
-    sb.append("; params=[");
-    sb.append(joiner.join(params));
-    sb.append("]");
+    sb.append("; params=").append(Parameter.toLogString(params));
     return sb.toString();
   }
 

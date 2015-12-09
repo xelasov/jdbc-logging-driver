@@ -3,9 +3,9 @@ package org.xelasov.jdbc.logdriver;
 import java.lang.reflect.Field;
 import java.sql.Types;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Objects;
-
-import com.google.common.base.Joiner;
+import java.util.StringJoiner;
 
 public class Parameter {
   protected static final HashMap<Integer, String> sqlTypes = new HashMap<>();
@@ -56,6 +56,12 @@ public class Parameter {
     return new Parameter(Direction.OUT, parameterName, getSqlTypeName(sqlType), null);
   }
 
+  public static String toLogString(List<Parameter> params) {
+    final StringJoiner sj = new StringJoiner(",", "[", "]");
+    params.stream().map(p -> p.toLogString()).forEach(s -> sj.add(s));
+    return sj.toString();
+  }
+
 
   protected enum Direction {
     IN,
@@ -76,8 +82,10 @@ public class Parameter {
   }
 
   public String toLogString() {
-    final Joiner joiner = Joiner.on(":").skipNulls();
-    return "<" + joiner.join(id, dir, type, val) + ">";
+    //final Joiner joiner = Joiner.on(":").skipNulls();
+    //return "<" + joiner.join(id, dir, type, val) + ">";
+    final StringJoiner sj = new StringJoiner(":", "<", ">");
+    return sj.add(id).add(dir.name()).add(type).add(val).toString();
   }
 
 }
