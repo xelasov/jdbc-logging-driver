@@ -29,12 +29,9 @@ public class ParameterTest {
 
   @Test
   public void testToLogString() {
-   // final String expectedInStr = "^=<1:IN:Byte:2>,<2:IN:Short:3>,<3:IN:Integer:4>,<4:IN:Long:5>,<5:IN:Float:6>,<6:IN:Double:7>,<7:IN:Reader:java\.io\.CharArrayReader[0-9a-z@]+>=$";
-    final String regexStr = "^=<1:IN:Byte:2>,<2:IN:Short:3>,<3:IN:Integer:4>,<4:IN:Long:5>,<5:IN:Float:6>,<6:IN:Double:7>,<7:IN:Reader:java.io.CharArrayReader@[0-9a-z]+>,<8:IN:Long:9>=$";
-    final String actualInStr   = Parameter.toLogString(makeInParams()).replace('[', '=').replace(']', '=');
-
+    final String regexStr    = "^\\[<1:IN:Byte:2>,<2:IN:Short:3>,<3:IN:Integer:4>,<4:IN:Long:5>,<5:IN:Float:6>,<6:IN:Double:7>,<7:IN:Reader:java.io.CharArrayReader@[0-9a-z]+>,<8:IN:Long:9>\\]$";
+    final String actualInStr = Parameter.toLogString(makeInParams());//.replace('[', '=').replace(']', '=');
     Assert.assertTrue(actualInStr != null && !actualInStr.isEmpty());
-//    Assert.assertEquals(expectedInStr, actualInStr);
     Assert.assertTrue("|" + actualInStr + "|", actualInStr.matches(regexStr));
   }
 
