@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.StringJoiner;
 
+import com.google.common.base.Joiner;
+
 public class Parameter {
   protected static final HashMap<Integer, String> sqlTypes = new HashMap<>();
 
@@ -82,10 +84,8 @@ public class Parameter {
   }
 
   public String toLogString() {
-    //final Joiner joiner = Joiner.on(":").skipNulls();
-    //return "<" + joiner.join(id, dir, type, val) + ">";
-    final StringJoiner sj = new StringJoiner(":", "<", ">");
-    return sj.add(id).add(dir.name()).add(type).add(val).toString();
+    final Joiner joiner = Joiner.on(":").skipNulls();
+    return "<" + joiner.join(id, dir, type, val) + ">";
   }
 
 }
