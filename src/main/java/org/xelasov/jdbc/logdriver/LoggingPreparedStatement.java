@@ -27,9 +27,9 @@ import com.google.common.base.Stopwatch;
 
 public class LoggingPreparedStatement extends LoggingStatement implements PreparedStatement {
 
-  protected final PreparedStatement    pStmt;
-  protected final String               sql;
-  protected final ArrayList<Parameter> params;
+  private final PreparedStatement    pStmt;
+  private final String               sql;
+  private final ArrayList<Parameter> params;
 
   public LoggingPreparedStatement(final LoggingConnection conn, final PreparedStatement pStmt, final String sql) {
     super(conn, pStmt);
@@ -38,12 +38,12 @@ public class LoggingPreparedStatement extends LoggingStatement implements Prepar
     this.sql = sql;
   }
 
-  protected void log(final String sql, final List<Parameter> params, final LoggingConnection conn, final Stopwatch timer) {
-    log(buildSqlString(sql, params), conn, timer);
+  protected void log(final String sql, final List<Parameter> params, final Stopwatch timer) {
+    log(buildSqlString(sql, params), timer);
   }
 
-  protected void log(final String sql, final List<Parameter> params, final LoggingConnection conn, final Stopwatch timer, final Throwable e) {
-    log(buildSqlString(sql, params), conn, timer, e);
+  protected void log(final String sql, final List<Parameter> params, final Stopwatch timer, final Throwable e) {
+    log(buildSqlString(sql, params), timer, e);
   }
 
   protected void setParam(Parameter p) {
@@ -73,10 +73,10 @@ public class LoggingPreparedStatement extends LoggingStatement implements Prepar
     final Stopwatch timer = Stopwatch.createStarted();
     try {
       final boolean rv = pStmt.execute();
-      log(sql, params, conn, timer);
+      log(sql, params, timer);
       return rv;
     } catch (final SQLException | RuntimeException e) {
-      log(sql, params, conn, timer, e);
+      log(sql, params, timer, e);
       throw e;
     }
   }
@@ -86,10 +86,10 @@ public class LoggingPreparedStatement extends LoggingStatement implements Prepar
     final Stopwatch timer = Stopwatch.createStarted();
     try {
       final ResultSet rv = pStmt.executeQuery();
-      log(sql, params, conn, timer);
+      log(sql, params, timer);
       return rv;
     } catch (final SQLException | RuntimeException e) {
-      log(sql, params, conn, timer, e);
+      log(sql, params, timer, e);
       throw e;
     }
   }
@@ -99,10 +99,10 @@ public class LoggingPreparedStatement extends LoggingStatement implements Prepar
     final Stopwatch timer = Stopwatch.createStarted();
     try {
       final int rv = pStmt.executeUpdate();
-      log(sql, params, conn, timer);
+      log(sql, params, timer);
       return rv;
     } catch (final SQLException | RuntimeException e) {
-      log(sql, params, conn, timer, e);
+      log(sql, params, timer, e);
       throw e;
     }
   }
