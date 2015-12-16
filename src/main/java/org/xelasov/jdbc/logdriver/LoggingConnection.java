@@ -16,12 +16,9 @@ import java.sql.Savepoint;
 import java.sql.Statement;
 import java.sql.Struct;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Properties;
 import java.util.concurrent.Executor;
-
-import com.google.common.base.Strings;
-
-import static com.google.common.base.Preconditions.checkArgument;
 
 public class LoggingConnection implements Connection {
 
@@ -29,8 +26,8 @@ public class LoggingConnection implements Connection {
   private final String     dbId;
 
   public LoggingConnection(final Connection conn, final String dbId) {
-    checkArgument(conn != null);
-    checkArgument(!Strings.isNullOrEmpty(dbId));
+    Objects.requireNonNull(conn);
+    Objects.requireNonNull(dbId);
 
     this.dbId = dbId;
     this.conn = conn;

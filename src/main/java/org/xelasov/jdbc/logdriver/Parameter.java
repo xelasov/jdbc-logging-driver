@@ -5,9 +5,8 @@ import java.sql.Types;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
-import java.util.StringJoiner;
 
-import com.google.common.base.Joiner;
+import org.xelasov.util.Joiner;
 
 public class Parameter {
   protected static final HashMap<Integer, String> sqlTypes = new HashMap<>();
@@ -59,9 +58,9 @@ public class Parameter {
   }
 
   public static String toLogString(List<Parameter> params) {
-    final StringJoiner sj = new StringJoiner(",", "[", "]");
-    params.stream().map(p -> p.toLogString()).forEach(s -> sj.add(s));
-    return sj.toString();
+    final Joiner joiner = new Joiner(",", "[", "]");
+    params.stream().map(p -> p.toLogString()).forEach(s -> joiner.append(s));
+    return joiner.toString();
   }
 
 
@@ -84,8 +83,9 @@ public class Parameter {
   }
 
   public String toLogString() {
-    final Joiner joiner = Joiner.on(":").skipNulls();
-    return "<" + joiner.join(id, dir, type, val) + ">";
+
+    final Joiner joiner = new Joiner(":", "<", ">");
+    return joiner.join(id, dir.name(), type, val);
   }
 
 }
