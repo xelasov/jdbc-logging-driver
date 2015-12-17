@@ -5,11 +5,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.SQLWarning;
 import java.sql.Statement;
-import java.util.concurrent.TimeUnit;
 
-import com.google.common.base.Stopwatch;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.xelasov.util.Stopwatch;
 
 public class LoggingStatement implements Statement {
 
@@ -24,11 +23,11 @@ public class LoggingStatement implements Statement {
   }
 
   protected void log(String sql, Stopwatch timer, Throwable e) {
-    log.info(buildLogString(sql, conn, timer.stop().elapsed(TimeUnit.MILLISECONDS)), e);
+    log.info(buildLogString(sql, conn, timer.stop().elapsedMillis()), e);
   }
 
   protected void log(String sql, Stopwatch timer) {
-    log.info(buildLogString(sql, conn, timer.stop().elapsed(TimeUnit.MILLISECONDS)));
+    log.info(buildLogString(sql, conn, timer.stop().elapsedMillis()));
   }
 
   protected static String buildLogString(final String sql, final LoggingConnection conn, final long millis) {
