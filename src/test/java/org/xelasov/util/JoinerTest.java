@@ -23,10 +23,10 @@ public class JoinerTest {
   @Test
   public void testConstructor() {
 
-    Assert.assertEquals("<>", new Joiner(dlm, prefix, suffix).join(null));
-    Assert.assertEquals(">", new Joiner(dlm, null, suffix).join(null));
-    Assert.assertEquals("<", new Joiner(dlm, prefix, null).join(null));
-    Assert.assertEquals("", new Joiner(dlm, null, null).join(null));
+    Assert.assertEquals("<>", new Joiner(dlm, prefix, suffix).join((String)null));
+    Assert.assertEquals(">", new Joiner(dlm, null, suffix).join((String)null));
+    Assert.assertEquals("<", new Joiner(dlm, prefix, null).join((String)null));
+    Assert.assertEquals("", new Joiner(dlm, null, null).join((String)null));
     Assert.assertEquals("<a>", new Joiner(dlm, prefix, suffix).join("a"));
     Assert.assertEquals("<a,b>", new Joiner(dlm, prefix, suffix).join("a", "b"));
     Assert.assertEquals("<a,b,c>", new Joiner(dlm, prefix, suffix).join("a", "b", "c"));
