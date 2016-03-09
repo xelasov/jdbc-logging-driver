@@ -4,15 +4,20 @@
   <groupId>org.xelasov</groupId>
   <artifactId>jdbc-logging-driver</artifactId>
   <packaging>jar</packaging>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>1.0.0</version>
   <name>jdbc-logging-driver</name>
-  <url>http://maven.apache.org</url>
+  <url>https://github.com/xelasov/jdbc-logging-driver</url>
   <dependencies>
+
+    <!-- RUNTIME Dependencies -->
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-api</artifactId>
       <version>1.7.12</version>
     </dependency>
+    <!-- ==================== -->
+
+    <!-- TEST Dependencies -->
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
@@ -25,6 +30,8 @@
       <version>1.10.19</version>
       <scope>test</scope>
     </dependency>
+    <!-- ==================== -->
+   
   </dependencies>
   <build>
     <plugins>
