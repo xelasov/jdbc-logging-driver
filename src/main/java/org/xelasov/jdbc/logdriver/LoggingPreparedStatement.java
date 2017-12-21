@@ -21,14 +21,14 @@ import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 
-import org.xelasov.util.Stopwatch;
+import static org.xelasov.jdbc.logdriver.DBCall.newJdbcCall;
+import static org.xelasov.jdbc.logdriver.ParametrizedDBCall.newCall;
 
 public class LoggingPreparedStatement extends LoggingStatement implements PreparedStatement {
 
-  private final PreparedStatement    pStmt;
-  private final String               sql;
+  private final PreparedStatement pStmt;
+  private final String sql;
   private final ArrayList<Parameter> params;
 
   public LoggingPreparedStatement(final LoggingConnection conn, final PreparedStatement pStmt, final String sql) {
@@ -38,23 +38,16 @@ public class LoggingPreparedStatement extends LoggingStatement implements Prepar
     this.sql = sql;
   }
 
-  protected void log(final String sql, final List<Parameter> params, final Stopwatch timer) {
-    log(buildSqlString(sql, params), timer);
+  protected void log(ParametrizedDBCall call, Throwable e) {
+    log.info(buildLogString(call.buildSqlString(), conn, call.getTimer().stop().elapsedMillis()), call, e);
   }
 
-  protected void log(final String sql, final List<Parameter> params, final Stopwatch timer, final Throwable e) {
-    log(buildSqlString(sql, params), timer, e);
+  protected void log(ParametrizedDBCall call) {
+    log.info(buildLogString(call.buildSqlString(), conn, call.getTimer().stop().elapsedMillis()), call);
   }
 
   protected void setParam(Parameter p) {
     params.add(p);
-  }
-
-  protected static String buildSqlString(String sql, List<Parameter> params) {
-    final StringBuilder sb = new StringBuilder();
-    sb.append("[sql=" + sql);
-    sb.append("; params=").append(Parameter.toLogString(params));
-    return sb.toString();
   }
 
   @Override
@@ -70,39 +63,39 @@ public class LoggingPreparedStatement extends LoggingStatement implements Prepar
 
   @Override
   public boolean execute() throws SQLException {
-    final Stopwatch timer = Stopwatch.createStarted();
+    ParametrizedDBCall dbCall = newCall(sql, params);
     try {
       final boolean rv = pStmt.execute();
-      log(sql, params, timer);
+      log(dbCall);
       return rv;
     } catch (final SQLException | RuntimeException e) {
-      log(sql, params, timer, e);
+      log(dbCall, e);
       throw e;
     }
   }
 
   @Override
   public ResultSet executeQuery() throws SQLException {
-    final Stopwatch timer = Stopwatch.createStarted();
+    ParametrizedDBCall dbCall = newCall(sql, params);
     try {
       final ResultSet rv = pStmt.executeQuery();
-      log(sql, params, timer);
+      log(dbCall);
       return rv;
     } catch (final SQLException | RuntimeException e) {
-      log(sql, params, timer, e);
+      log(dbCall, e);
       throw e;
     }
   }
 
   @Override
   public int executeUpdate() throws SQLException {
-    final Stopwatch timer = Stopwatch.createStarted();
+    ParametrizedDBCall dbCall = newCall(sql, params);
     try {
       final int rv = pStmt.executeUpdate();
-      log(sql, params, timer);
+      log(dbCall);
       return rv;
     } catch (final SQLException | RuntimeException e) {
-      log(sql, params, timer, e);
+      log(dbCall, e);
       throw e;
     }
   }
