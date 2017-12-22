@@ -7,6 +7,39 @@
   <version>1.0.1-SNAPSHOT</version>
   <name>jdbc-logging-driver</name>
   <url>https://github.com/xelasov/jdbc-logging-driver</url>
+
+  <!-- START: add our Artifactory to the list of repos -->
+  <repositories>
+    <repository>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+      <id>techshed-release</id>
+      <name>techshed-release</name>
+      <url>https://factory.techshed-dev.com/artifactory/libs-release</url>
+    </repository>
+    <repository>
+      <snapshots />
+      <id>techshed-snapshots</id>
+      <name>techshed-snapshot</name>
+      <url>https://factory.techshed-dev.com/artifactory/libs-snapshot</url>
+    </repository>
+  </repositories>
+
+  <distributionManagement>
+    <repository>
+      <id>techshed-artifactory</id>
+      <name>Redbeacon Repository</name>
+      <url>https://factory.techshed-dev.com/artifactory/libs-release-local</url>
+    </repository>
+    <snapshotRepository>
+      <id>techshed-artifactory</id>
+      <name>Redbeacon Repository Snapshots</name>
+      <url>https://factory.techshed-dev.com/artifactory/libs-snapshot-local</url>
+    </snapshotRepository>
+  </distributionManagement>
+  <!-- END: replace all repos with our Artifactory -->
+
   <dependencies>
 
     <!-- RUNTIME Dependencies -->
