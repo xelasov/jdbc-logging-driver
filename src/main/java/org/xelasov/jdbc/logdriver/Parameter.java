@@ -88,4 +88,19 @@ public class Parameter {
     return joiner.join(id, dir.name(), type, val);
   }
 
+  public String getId() {
+    return id;
+  }
+
+  public String getType() {
+    return type;
+  }
+
+  public String getVal() {
+    return val;
+  }
+
+  public Direction getDir() {
+    return dir;
+  }
 }

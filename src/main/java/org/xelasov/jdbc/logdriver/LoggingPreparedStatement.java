@@ -39,10 +39,12 @@ public class LoggingPreparedStatement extends LoggingStatement implements Prepar
   }
 
   protected void log(ParametrizedDBCall call, Throwable e) {
+    call.setUr(conn.getDbId());
     log.info(buildLogString(call.buildSqlString(), conn, call.getTimer().stop().elapsedMillis()), call, e);
   }
 
   protected void log(ParametrizedDBCall call) {
+    call.setUr(conn.getDbId());
     log.info(buildLogString(call.buildSqlString(), conn, call.getTimer().stop().elapsedMillis()), call);
   }
 
