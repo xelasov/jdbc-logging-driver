@@ -407,7 +407,6 @@ public class LoggingPreparedStatement extends LoggingStatement implements Prepar
 
   protected void populateMDC(ParametrizedDBCall call) {
     super.populateMDC(call);
-    MDC.put(MDC_JDBC_PARAMS, call.buildSqlString());
-
+    MDC.put(MDC_JDBC_PARAMS, call.buildParamsString());
   }
 }

@@ -24,8 +24,12 @@ public class ParametrizedDBCall extends DBCall {
   protected String buildSqlString() {
     final StringBuilder sb = new StringBuilder();
     sb.append("[sql=" + getSql());
-    sb.append("; params=").append(Parameter.toLogString(getParameters()));
+    sb.append("; params=").append(buildParamsString());
     return sb.toString();
+  }
+
+  public String buildParamsString() {
+    return Parameter.toLogString(getParameters());
   }
 
   public List<Parameter> getParameters() {
