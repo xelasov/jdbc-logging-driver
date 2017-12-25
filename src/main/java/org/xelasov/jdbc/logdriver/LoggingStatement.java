@@ -30,11 +30,13 @@ public class LoggingStatement implements Statement {
 
   protected void log(DBCall call, Throwable e) {
     call.getTimer().stop();
+    populateMDC(call);
     log.info(buildLogString(call.getSql(), conn, call.getTimer().elapsedMillis()), call, e);
   }
 
   protected void log(DBCall call) {
     call.getTimer().stop();
+    populateMDC(call);
     log.info(buildLogString(call.getSql(), conn, call.getTimer().elapsedMillis()), call);
   }
 
