@@ -8,8 +8,12 @@ import java.sql.Statement;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
 import org.xelasov.util.Stopwatch;
 
+import static org.xelasov.jdbc.logdriver.Constants.MDC_JDBC_LATENCY;
+import static org.xelasov.jdbc.logdriver.Constants.MDC_JDBC_SQL_KEY;
+import static org.xelasov.jdbc.logdriver.Constants.MDC_JDBC_URL_KEY;
 import static org.xelasov.jdbc.logdriver.DBCall.newJdbcCall;
 
 public class LoggingStatement implements Statement {
@@ -25,13 +29,13 @@ public class LoggingStatement implements Statement {
   }
 
   protected void log(DBCall call, Throwable e) {
-    call.setUr(conn.getDbId());
-    log.info(buildLogString(call.getSql(), conn, call.getTimer().stop().elapsedMillis()), call, e);
+    call.getTimer().stop();
+    log.info(buildLogString(call.getSql(), conn, call.getTimer().elapsedMillis()), call, e);
   }
 
   protected void log(DBCall call) {
-    call.setUr(conn.getDbId());
-    log.info(buildLogString(call.getSql(), conn, call.getTimer().stop().elapsedMillis()), call);
+    call.getTimer().stop();
+    log.info(buildLogString(call.getSql(), conn, call.getTimer().elapsedMillis()), call);
   }
 
   protected static String buildLogString(final String sql, LoggingConnection conn, final long millis) {
@@ -339,6 +343,12 @@ public class LoggingStatement implements Statement {
   @Override
   public boolean isCloseOnCompletion() throws SQLException {
     return stmt.isCloseOnCompletion();
+  }
+
+  protected void populateMDC(DBCall call) {
+    MDC.put(MDC_JDBC_URL_KEY, conn.getDbId());
+    MDC.put(MDC_JDBC_SQL_KEY, call.getSql());
+    MDC.put(MDC_JDBC_LATENCY, String.valueOf(call.getTimer().elapsedMillis()));
   }
 
 }

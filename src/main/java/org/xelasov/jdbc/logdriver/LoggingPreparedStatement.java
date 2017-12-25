@@ -1,5 +1,7 @@
 package org.xelasov.jdbc.logdriver;
 
+import org.slf4j.MDC;
+
 import java.io.InputStream;
 import java.io.Reader;
 import java.math.BigDecimal;
@@ -22,7 +24,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-import static org.xelasov.jdbc.logdriver.DBCall.newJdbcCall;
+import static org.xelasov.jdbc.logdriver.Constants.MDC_JDBC_PARAMS;
 import static org.xelasov.jdbc.logdriver.ParametrizedDBCall.newCall;
 
 public class LoggingPreparedStatement extends LoggingStatement implements PreparedStatement {
@@ -39,13 +41,15 @@ public class LoggingPreparedStatement extends LoggingStatement implements Prepar
   }
 
   protected void log(ParametrizedDBCall call, Throwable e) {
-    call.setUr(conn.getDbId());
-    log.info(buildLogString(call.buildSqlString(), conn, call.getTimer().stop().elapsedMillis()), call, e);
+    call.getTimer().stop();
+    populateMDC(call);
+    log.info(buildLogString(call.buildSqlString(), conn, call.getTimer().elapsedMillis()), call, e);
   }
 
   protected void log(ParametrizedDBCall call) {
-    call.setUr(conn.getDbId());
-    log.info(buildLogString(call.buildSqlString(), conn, call.getTimer().stop().elapsedMillis()), call);
+    call.getTimer().stop();
+    populateMDC(call);
+    log.info(buildLogString(call.buildSqlString(), conn, call.getTimer().elapsedMillis()), call);
   }
 
   protected void setParam(Parameter p) {
@@ -401,4 +405,9 @@ public class LoggingPreparedStatement extends LoggingStatement implements Prepar
     pStmt.setURL(parameterIndex, x);
   }
 
+  protected void populateMDC(ParametrizedDBCall call) {
+    super.populateMDC(call);
+    MDC.put(MDC_JDBC_PARAMS, call.buildSqlString());
+
+  }
 }
