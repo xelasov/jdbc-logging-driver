@@ -43,13 +43,13 @@ public class LoggingPreparedStatement extends LoggingStatement implements Prepar
   protected void log(ParametrizedDBCall call, Throwable e) {
     call.getTimer().stop();
     populateMDC(call);
-    log.info(buildLogString(call.buildSqlString(), conn, call.getTimer().elapsedMillis()), call, e);
+    log.info(buildLogString(call.buildSqlString(), conn, call.getTimer().elapsedMillis()), e);
   }
 
   protected void log(ParametrizedDBCall call) {
     call.getTimer().stop();
     populateMDC(call);
-    log.info(buildLogString(call.buildSqlString(), conn, call.getTimer().elapsedMillis()), call);
+    log.info(buildLogString(call.buildSqlString(), conn, call.getTimer().elapsedMillis()));
   }
 
   protected void setParam(Parameter p) {

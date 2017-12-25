@@ -31,13 +31,13 @@ public class LoggingStatement implements Statement {
   protected void log(DBCall call, Throwable e) {
     call.getTimer().stop();
     populateMDC(call);
-    log.info(buildLogString(call.getSql(), conn, call.getTimer().elapsedMillis()), call, e);
+    log.info(buildLogString(call.getSql(), conn, call.getTimer().elapsedMillis()), e);
   }
 
   protected void log(DBCall call) {
     call.getTimer().stop();
     populateMDC(call);
-    log.info(buildLogString(call.getSql(), conn, call.getTimer().elapsedMillis()), call);
+    log.info(buildLogString(call.getSql(), conn, call.getTimer().elapsedMillis()));
   }
 
   protected static String buildLogString(final String sql, LoggingConnection conn, final long millis) {
