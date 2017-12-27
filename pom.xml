@@ -4,7 +4,7 @@
   <groupId>org.xelasov</groupId>
   <artifactId>jdbc-logging-driver</artifactId>
   <packaging>jar</packaging>
-  <version>1.0.1-SNAPSHOT</version>
+  <version>1.0.1</version>
   <name>jdbc-logging-driver</name>
   <url>https://github.com/xelasov/jdbc-logging-driver</url>
 
